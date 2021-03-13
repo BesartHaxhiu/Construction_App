@@ -16,10 +16,14 @@
 </head>
 <body>
 <?php require('../../Components/header.php');  ?>
+<nav>
+    <a class="text-light">Tools</a>
+    <a href="../../Home.php">Home</a>
+    <a href="../machines/machines.php">Machines</a>
+</nav>
 <div class="container my-5">
 <div class="mx-auto my-2">
     <a class="flex-start" href="addTools.php"> Add New Tool</a>
-    <span class="float-end text-primary goBack" onclick="window.history.go(-1); return false;">Go back</span>
     </div>
 <table class="table">
   <thead>

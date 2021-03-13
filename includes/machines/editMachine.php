@@ -17,17 +17,24 @@
         $image = $_FILES['image']['name'];
         $target = '../../assets/images/' .basename($image);
 
-        $sql = 'UPDATE machines SET title = :title, description = :description, image = :image WHERE id = :id ';
-        $query = $pdo->prepare($sql);
-        $query->bindParam('title', $title);
-        $query->bindParam('description', $description);
-        $query->bindParam('image', $image);
-        $query->bindParam('id', $id);
+     
         
-        if($image != ""){
-        $upload = move_uploaded_file($_FILES['image']['tmp_name'], $target);
-        } else{
-            $file = $oldfile;
+        if(!empty($_FILES['image']['name'])){
+            $sql = 'UPDATE machines SET title = :title, description = :description, image = :image WHERE id = :id ';
+            $query = $pdo->prepare($sql);
+            $query->bindParam('title', $title);
+            $query->bindParam('description', $description);
+            $query->bindParam('image', $image);
+            $query->bindParam('id', $id);
+
+            $upload = move_uploaded_file($_FILES['image']['tmp_name'], $target);
+        }
+        else{
+            $sql = 'UPDATE machines SET title = :title, description = :description WHERE id = :id ';
+            $query = $pdo->prepare($sql);
+            $query->bindParam('title', $title);
+            $query->bindParam('description', $description);
+            $query->bindParam('id', $id);
         }
         $query->execute();
         header("Location: machines.php");

@@ -11,25 +11,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../Styles/style.css" >
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/70e8663556.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Piazzolla&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Sansita+Swashed&display=swap" rel="stylesheet">
+    <script src="https://www.gstatic.com/firebasejs/7.22.1/firebase-app.js"></script>
     <title>Document</title>
 </head>
 <body>
 <?php require('../../Components/header.php');  ?>
-<div class="container">
-<a href="addMachines.php">Add new machines</a>
-<span class="float-end text-info goBack" onclick="window.history.go(-1); return false;">Go back</span>
-    <div class="row row-cols-1 row-cols-md-3 g-4 mt-5">
+<nav>
+    <a class="text-light">Machines</a>
+    <a href="../../Home.php">Home</a>
+    <a href="../tools/tools.php">Tools</a>
+</nav>
+<div class="container my-5">
+<a href="addMachines.php"><i class="fa fa-plus-circle text-warning plus"></i></a>
+    <div class="row row-cols-1 row-cols-md-3 g-4 mt-1">
     <?php foreach($machines as $machine): ?>
       <div class="col">
         <div class="card h-100">
-          <img src="../../assets/images/<?php echo $machine['image'] ?>" class="card-img-top h-50 w-100" alt="...">
+          <img src="../../assets/images/<?php echo $machine['image'] ?>" class="card-img-top h-50 w-60 p-4" alt="...">
           <div class="card-body">
-            <h5 class="card-title"><?= $machine['title'] ?></h5>
-            <p class="card-text"><?= $machine['description'] ?></p>
+            <h5 class="card-title text-center"><?= $machine['title'] ?></h5>
+            <p class="card-text text-secondary"><?= $machine['description'] ?></p>
           </div>
           <div class="card-footer">
-            <a class="btn btn-outline-danger" href="deleteMachine.php?id=<?php echo $machine['id']; ?>">Delete</a>
-            <a class="btn btn-outline-dark" href="editMachine.php?id=<?php echo $machine['id']; ?>">Edit</a>
+            <a class="btn btn-outline-danger" href="deleteMachine.php?id=<?php echo $machine['id']; ?>"><i class="fa fa-trash"></i></a>
+            <a class="btn btn-outline-dark float-end" href="editMachine.php?id=<?php echo $machine['id']; ?>"><i class="fa fa-edit"></i></a>
           </div>
         </div>
       </div>
