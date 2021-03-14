@@ -12,18 +12,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../Styles/style.css" >
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/70e8663556.js" crossorigin="anonymous"></script>
     <title>Document</title>
 </head>
 <body>
 <?php require('../../Components/header.php');  ?>
 <nav>
-    <a class="text-light">Tools</a>
     <a href="../../Home.php">Home</a>
     <a href="../machines/machines.php">Machines</a>
+    <a class="text-light">Tools</a>
 </nav>
 <div class="container my-5">
 <div class="mx-auto my-2">
-    <a class="flex-start" href="addTools.php"> Add New Tool</a>
+    <a href="addTools.php"><i class="fa fa-plus-circle text-warning plus"></i></a>
     </div>
 <table class="table">
   <thead>

@@ -12,16 +12,13 @@
     <link rel="stylesheet" href="../../Styles/style.css" >
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/70e8663556.js" crossorigin="anonymous"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Piazzolla&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Sansita+Swashed&display=swap" rel="stylesheet">
-    <script src="https://www.gstatic.com/firebasejs/7.22.1/firebase-app.js"></script>
     <title>Document</title>
 </head>
 <body>
 <?php require('../../Components/header.php');  ?>
 <nav>
-    <a class="text-light">Machines</a>
     <a href="../../Home.php">Home</a>
+    <a class="text-light">Machines</a>
     <a href="../tools/tools.php">Tools</a>
 </nav>
 <div class="container my-5">

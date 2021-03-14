@@ -26,14 +26,14 @@
         <div class="card m-5">
             <img src="./assets/tools.png" width="100" height="200" class="card-img-top p-4" alt="no image">
             <div class="card-body">
-            <h5 class="card-title text-center">Machines</h5>
-            <a href="./includes/machines/machines.php">View All</a>
+            <h5 class="card-title text-center">Tools</h5>
+            <a href="./includes/tools/tools.php">View All</a>
             </div>
         </div>
         <div class="card m-5">
             <img  src="./assets/safe.png" width="100" height="200" class="card-img-top p-4" alt="no image">
             <div class="card-body">
-            <h5 class="card-title text-center">Machines</h5>
+            <h5 class="card-title text-center">Safety Equipments</h5>
             <a href="./includes/machines/machines.php">View All</a>
             </div>
         </div>
