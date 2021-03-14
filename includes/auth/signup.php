@@ -11,26 +11,33 @@ session_start();
 <?php
 
     if(isset($_POST['submit'])) {
+        if(!empty($_POST['email']) && !empty($_POST['password'])){
+            $password = password_hash($_POST['password'], PASSWORD_ARGON2I);
 
-        $password = password_hash($_POST['password'], PASSWORD_ARGON2I);
-
-        $stmt = $pdo->prepare('SELECT COUNT(email) AS EmailCount FROM users WHERE email = :email');
-        $stmt->execute(array('email' => $_POST['email']));
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            $stmt = $pdo->prepare('SELECT COUNT(email) AS EmailCount FROM users WHERE email = :email');
+            $stmt->execute(array('email' => $_POST['email']));
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+            if ($result['EmailCount'] == 0) {
+            $query = $pdo->prepare('INSERT INTO users (email, password) VALUES ( :email, :password)');
+            $query->bindParam(':email', $_POST['email']);
+            $query->bindParam(':password', $password);
+            $query->execute();
+            header('Location: ../../Home.php');
+            } 
+        }
+        if(empty($_POST['email'])){
+            $emailErr = 'Email is required!';
+        }
+        if(empty($_POST['password'])){
+            $passwordErr = 'Password is required';
+        }
         
-        if ($result['EmailCount'] == 0) {
-        $query = $pdo->prepare('INSERT INTO users (email, password) VALUES ( :email, :password)');
-        $query->bindParam(':email', $_POST['email']);
-        $query->bindParam(':password', $password);
-        $query->execute();
-        header('Location: ../../Home.php');
-        } 
         else{
             echo "<div class='alert alert-primary' role='alert'>
                         This email is taken!
                     </div>";
         }
-
 }
 ?>
 
@@ -55,12 +62,18 @@ session_start();
         </div>
         <div class="form-group ">
             <label for="exampleInputEmail1">Email address</label>
-            <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+            <input type="email" name="email" class="form-control"  id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
             <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+            <?php if(isset($emailErr)) : ?>
+                <p class="text-danger"><?= $emailErr ?></p>
+            <?php endif; ?>        
         </div>
         <div class="form-group">
             <label for="exampleInputPassword1">Password</label>
-            <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+            <input type="password" name="password" class="form-control"  id="exampleInputPassword1" placeholder="Password">
+            <?php if(isset($passwordErr)) : ?>
+                <p class="text-danger"><?= $passwordErr ?></p>
+            <?php endif; ?>
         </div>
         <button type="submit" name="submit" value="submit" class="btn btn-dark my-3">Submit</button><br>
         <div class="text-center">

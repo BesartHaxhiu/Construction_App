@@ -1,3 +1,9 @@
+<?php
+    session_start();
+    if(!isset($_SESSION['id']) && !$_SESSION['id']){
+        header('Location: ../../Home.php');
+    }
+?>
 <?php require('../../db/db.php') ?>
 <?php 
 
@@ -16,6 +22,8 @@ if(isset($_POST['submit'])){
   $upload = move_uploaded_file($_FILES['image']['tmp_name'], $target);
 
   $query->execute();
+
+  header('Location: machines.php');
 }
 
 ?>

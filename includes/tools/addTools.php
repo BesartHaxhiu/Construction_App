@@ -1,5 +1,9 @@
-<?php require('../../db/db.php'); ?>
 <?php 
+    session_start();
+    require('../../db/db.php'); 
+    if(!isset($_SESSION['id'])){
+        header('Location: ../../Home.php');
+    }
 
     if(isset($_POST['submit'])){
         $title = $_POST['title'];

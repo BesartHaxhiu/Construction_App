@@ -21,8 +21,11 @@
             $_SESSION['id'] = $user['id'];
             header('Location: ../../Home.php');
         }
-            else {
-            echo "<h4 style='color:red; position:absolute; top:280px; left:590px;'>Email ose Password - Gabim </h4>";
+        if(isset($_POST['email'])){
+            $emailErr = 'Email is required';
+        }
+        if(isset($_POST['password'])){
+            $passwordErr = 'Password is required';
         }
     }
 ?>
@@ -50,10 +53,16 @@
             <label for="exampleInputEmail1">Email address</label>
             <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
             <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+            <?php if(isset($emailErr)) : ?>
+                <p class="text-danger"><?= $emailErr ?></p>
+            <?php endif; ?>
         </div>
         <div class="form-group">
             <label for="exampleInputPassword1">Password</label>
             <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+            <?php if(isset($passwordErr)) : ?>
+                <p class="text-danger"><?= $passwordErr ?></p>
+            <?php endif; ?>
         </div>
         <button type="submit" name="submit" value="submit" class="btn btn-dark my-3">Submit</button><br>
         <div class="text-center">

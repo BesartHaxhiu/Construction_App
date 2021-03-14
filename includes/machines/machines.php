@@ -1,4 +1,5 @@
 <?php 
+  session_start();
   require('../../db/db.php');
   $query = $pdo->query('SELECT * FROM machines');
   $machines =  $query->fetchAll();
@@ -33,8 +34,13 @@
             <p class="card-text text-secondary"><?= $machine['description'] ?></p>
           </div>
           <div class="card-footer">
+            <?php if(isset($_SESSION['id']) && $_SESSION['id']): ?>
             <a class="btn btn-outline-danger" href="deleteMachine.php?id=<?php echo $machine['id']; ?>"><i class="fa fa-trash"></i></a>
             <a class="btn btn-outline-dark float-end" href="editMachine.php?id=<?php echo $machine['id']; ?>"><i class="fa fa-edit"></i></a>
+            <?php else: ?>
+              <button class="btn btn-outline-danger" disabled><i class="fa fa-trash"></i></button>
+              <button class="btn btn-outline-dark float-end" disabled><i class="fa fa-edit"></i></button>
+            <?php endif; ?>
           </div>
         </div>
       </div>

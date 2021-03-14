@@ -1,4 +1,5 @@
 <?php 
+  session_start();
   require('../../db/db.php');
   $query = $pdo->query('SELECT * FROM tools');
   $tools = $query->fetchALL();  
@@ -46,8 +47,13 @@
       <td><?= $tool['description'] ?></td>
       <td><?= $tool['stock'] ?></td>
       <td> <img src="../../assets/images/<?= $tool['image'] ?>" class="img-thumbnail" width="50" height="50"></td>
+      <?php if(isset($_SESSION['id']) && $_SESSION['id']): ?>
       <td><a href="editTools.php?id=<?= $tool['id'] ?>" class="text-secondary">Edit</a></td>
       <td><a href="deleteTools.php?id=<?= $tool['id'] ?>" class="text-danger">Delete</a></td>
+      <?php else: ?>
+      <td><button class="btn btn-outline-secondary" disabled><i class="fa fa-edit"></i></button></td>
+      <td><button class="btn btn-outline-danger" disabled><i class="fa fa-trash"></i></button></td>
+      <?php endif; ?>
     </tr>
     <?php endforeach ?>
   </tbody>
