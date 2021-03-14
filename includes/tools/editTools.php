@@ -1,6 +1,9 @@
 <?php 
 	require('../../db/db.php');
-
+    session_start();
+    if(!isset($_SESSION['id'])){
+        header('Location: ../../Home.php');
+    }
     if(isset($_GET['id'])){
         $id = $_GET['id'];
     }
@@ -12,6 +15,7 @@
     $tool = $query->fetch();
 	
 	if(isset($_POST['submit'])){
+        if(!empty($_POST['title']) && !empty($_POST['description']) && !empty($_POST['stock']) && $_POST['stock'] > 0){
         $title = $_POST['title'];
         $description = $_POST['description'];
         $stock = $_POST['stock'];
@@ -42,6 +46,18 @@
         $query->execute();
         header("Location: tools.php");
     }
+    if(empty($_POST['title'])){
+        $titleErr = 'Title is required';
+    }
+    if(empty($_POST['description'])){
+        $descriptionErr = 'Description is required';
+    }
+    if($_POST['stock'] < 0){
+        $stockErr = 'Stock lower';
+    }
+    
+    }
+    
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -62,8 +78,17 @@
     </div>
     <form  method="POST" enctype="multipart/form-data" class="col-md-6 mx-auto">
     <input type="text" name="title" value="<?= $tool['title'] ?>" class="form-control my-3"/>
+    <?php if(isset($titleErr)) : ?>
+                <p class="text-danger"><?= $titleErr ?></p>
+            <?php endif; ?>
     <input type="text" name="description" value="<?= $tool['description'] ?>" class="form-control my-3"/>
+    <?php if(isset($descriptionErr)) : ?>
+                <p class="text-danger"><?= $descriptionErr ?></p>
+            <?php endif; ?>
     <input type="number" name="stock" value="<?= $tool['stock'] ?>"  class="form-control my-3"/>
+    <?php if(isset($stockErr)) : ?>
+                <p class="text-danger"><?= $stockErr ?></p>
+            <?php endif; ?>
     <input type="file" name="image" value="<?= $tool['image'] ?>" class="form-control my-3">
     <img src="../../assets/images/<?= $tool['image'] ?>" alt="no image" class="img-thumbnail my-2" width="80" height="80"> <br>
     <button type="submit" value="submit" name="submit" class="btn btn-outline-dark">Submit</button>

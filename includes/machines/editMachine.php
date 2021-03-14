@@ -1,6 +1,9 @@
 <?php 
 	require('../../db/db.php');
-
+    session_start();
+    if(!isset($_SESSION['id'])){
+        header('Location: ../../Home.php');
+    }
     if(isset($_GET['id'])){
         $id = $_GET['id'];
     }
@@ -12,13 +15,12 @@
     $machine = $query->fetch();
 	
 	if(isset($_POST['submit'])){
+        if(!empty($_POST['title']) && !empty($_POST['description'])){
         $title = $_POST['title'];
         $description = $_POST['description'];
         $image = $_FILES['image']['name'];
         $target = '../../assets/images/' .basename($image);
 
-     
-        
         if(!empty($_FILES['image']['name'])){
             $sql = 'UPDATE machines SET title = :title, description = :description, image = :image WHERE id = :id ';
             $query = $pdo->prepare($sql);
@@ -38,6 +40,13 @@
         }
         $query->execute();
         header("Location: machines.php");
+    }
+    if(empty($_POST['title'])){
+        $titleErr = 'Title is required';
+    }
+    if(empty($_POST['description'])){
+        $descriptionErr = 'Description is required';
+    }
     }
 ?>
 <!DOCTYPE html>
@@ -60,7 +69,13 @@
     </div>
         <form method="POST" enctype="multipart/form-data" class="col-md-6 mx-auto">
             <input type="text" name="title" value="<?= $machine['title']; ?>" placeholder="Enter title" class="form-control my-2"><br>
+            <?php if(isset($titleErr)) : ?>
+                <p class="text-danger"><?= $titleErr ?></p>
+            <?php endif; ?>
             <input type="text" name="description" value="<?= $machine['description']; ?>" placeholder="Enter description" class="form-control my-2"><br>
+            <?php if(isset($descriptionErr)) : ?>
+                <p class="text-danger"><?= $descriptionErr ?></p>
+            <?php endif; ?>
             <input type="file" name="image" value="<?= $machine['image']; ?>" class="form-control my-2">
             <img src="../../assets/images/<?= $machine['image'] ?>" class="img-thumbnail" width="100" height="100">
             <br>

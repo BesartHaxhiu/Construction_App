@@ -1,12 +1,12 @@
-<?php session_start(); ?>
-<?php
+<?php 
+
+    require('../../db/db.php'); 
+    session_start(); 
+
     if(isset($_SESSION['id'])) {
         header('Location: ../../Home.php');
     }
-?>
-<?php require('../../db/db.php'); ?>
-    
-<?php
+
     if(isset($_POST['submit'])) {
         $email = $_POST['email'];
         $password = $_POST['password'];

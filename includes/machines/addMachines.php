@@ -1,32 +1,40 @@
 <?php
+
+    require('../../db/db.php');
     session_start();
-    if(!isset($_SESSION['id']) && !$_SESSION['id']){
+    if(!isset($_SESSION['id'])){
         header('Location: ../../Home.php');
     }
+
+    if(isset($_POST['submit'])){
+    if(!empty($_POST['title']) && !empty($_POST['description'])){
+    $title = $_POST['title'];
+    $description = $_POST['description'];
+    $image = $_FILES['image']['name'];
+    $target = '../../assets/images/' .basename($image);
+
+    $sql = 'INSERT INTO machines (title, description, image) VALUES (:title, :description, :image)';
+    $query = $pdo->prepare($sql);
+    $query->bindParam('title', $title);
+    $query->bindParam('description', $description);
+    $query->bindParam('image', $image);
+
+    $upload = move_uploaded_file($_FILES['image']['tmp_name'], $target);
+
+    $query->execute();
+    header('Location: machines.php');
+    }
+    if(empty($_POST['title'])){
+        $titleErr = 'Title is required';
+    }
+    if(empty($_POST['description'])){
+        $descriptionErr = 'Description is required';
+    }
+
+   
+    }
 ?>
-<?php require('../../db/db.php') ?>
-<?php 
 
-if(isset($_POST['submit'])){
-  $title = $_POST['title'];
-  $description = $_POST['description'];
-  $image = $_FILES['image']['name'];
-  $target = '../../assets/images/' .basename($image);
-
-  $sql = 'INSERT INTO machines (title, description, image) VALUES (:title, :description, :image)';
-  $query = $pdo->prepare($sql);
-  $query->bindParam('title', $title);
-  $query->bindParam('description', $description);
-  $query->bindParam('image', $image);
-
-  $upload = move_uploaded_file($_FILES['image']['tmp_name'], $target);
-
-  $query->execute();
-
-  header('Location: machines.php');
-}
-
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -46,7 +54,13 @@ if(isset($_POST['submit'])){
     </div>
 <form  method="POST" enctype="multipart/form-data" class="col-md-6 mx-auto">
 <input type="text" name="title" placeholder="enter title" class="form-control my-3"/>
+<?php if(isset($titleErr)) : ?>
+    <p class="text-danger"><?= $titleErr ?></p>
+<?php endif; ?>
 <input type="text" name="description" placeholder="enter description"  class="form-control my-3"/>
+<?php if(isset($descriptionErr)) : ?>
+    <p class="text-danger"><?= $descriptionErr ?></p>
+<?php endif; ?>
 <input type="file" name="image" class="form-control my-3">
 
 <button type="submit" value="submit" name="submit" class="btn btn-outline-dark">Submit</button>

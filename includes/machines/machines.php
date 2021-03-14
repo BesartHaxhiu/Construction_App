@@ -28,7 +28,7 @@
     <?php foreach($machines as $machine): ?>
       <div class="col">
         <div class="card h-100">
-          <img src="../../assets/images/<?php echo $machine['image'] ?>" class="card-img-top h-50 w-60 p-4" alt="...">
+          <img src="../../assets/images/<?php echo $machine['image'] ?>" class="card-img-top h-50 w-60 p-4" alt="This machine has no image">
           <div class="card-body">
             <h5 class="card-title text-center"><?= $machine['title'] ?></h5>
             <p class="card-text text-secondary"><?= $machine['description'] ?></p>

@@ -1,14 +1,11 @@
 <?php
-session_start();
-?>
-<?php require('../../db/db.php') ?>
-<?php
-        if(isset($_SESSION['id'])) {
+
+    require('../../db/db.php');
+    session_start();
+
+    if(isset($_SESSION['id'])) {
         header('Location: ../../Home.php');
     }
-?>
-    
-<?php
 
     if(isset($_POST['submit'])) {
         if(!empty($_POST['email']) && !empty($_POST['password'])){
